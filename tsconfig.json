@@ -5,7 +5,7 @@
     "target": "ESNext",
     "module": "commonjs",
     "esModuleInterop": true,
-    "strict": true,
+    "strict": false,
     "types": [
       "node"
     ],

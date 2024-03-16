@@ -1,34 +1,35 @@
-import { serve } from '@hono/node-server'
-import { Hono } from 'hono'
-import { secureHeaders } from 'hono/secure-headers'
-import { rateLimit } from './middlewares/rateLimiter'
-import { ApiError } from './utils/ApiError'
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const formidable = require('express-formidable');
 
-const app = new Hono()
-const accessMap = new Map()
-app.use(secureHeaders())
+const app = express();
+const port = 3000;
 
-app.get('/', rateLimit(accessMap), (c) => {
-  return c.text('Olá! Seja bem-vindo :)', 200);
-})
+app.use(express.urlencoded({ extended: true }));
 
-app.post('/upload', async (c) => {
-  const body = await c.req.parseBody()
-  console.log(body['file'])
-})
+app.use(formidable());
 
-app.get('/health', (c) => c.text('Health Ok!', 200))
+app.post('/upload', (req, res) => {
+  const uploadedFile = req.files['image'];
 
-app.onError((err, c) => {
-  let a = err as ApiError
-  console.error(`${err}`)
-  return c.text('Atenção! Você atingiu o limite de requisições por minuto.', a.statusCode)
-})
+  if (!uploadedFile) {
+    return res.status(400).json({ error: 'Nenhum arquivo recebido.' });
+  }
 
-const port = 3000
-console.log(`Server is running on port ${port}`)
+  const tempPath = uploadedFile.path;
+  const targetPath = path.join(__dirname, 'images', 'temp.png');
 
-serve({
-  fetch: app.fetch,
-  port
-})
+  fs.rename(tempPath, targetPath, (err) => {
+    if (err) {
+      console.error('Erro ao salvar a imagem:', err);
+      return res.status(500).json({ error: 'Erro ao salvar a imagem.' });
+    }
+    console.log('Imagem salva com sucesso.');
+    res.status(200).json({ message: 'Imagem enviada com sucesso e salva como temp.png' });
+  });
+});
+
+app.listen(port, () => {
+  console.log(`Servidor rodando em http://localhost:${port}`);
+});
