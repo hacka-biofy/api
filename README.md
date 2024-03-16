@@ -1,14 +1,10 @@
-# Itsm Middleware
+# Hacka Biofy
 
 ## Development
 
 ```
 npm install
 npm run dev
-```
-
-```
-open http://localhost:3000
 ```
 
 ## Instructions for Simulating Internet Access
@@ -23,7 +19,7 @@ ssh -R 80:localhost:3000 serveo.net
 According to the url returned, we can now test. Ex:
 
 ```
-curl --request GET https://8b69bf071122ad7a00024a6ca8cd7537.serveo.net/rate
+curl --request GET https://8b69bf071122ad7a00024a6ca8cd7537.serveo.net/
 ```
 
 ## Instructions for Running on Docker
