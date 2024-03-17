@@ -1,7 +1,7 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const formidable = require('express-formidable');
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import formidable from 'express-formidable';
 
 const app = express();
 const port = 3000;
@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(formidable());
 
-app.post('/upload', (req, res) => {
+app.post('/upload', (req: any, res: any) => {
   const uploadedFile = req.files['image'];
 
   if (!uploadedFile) {

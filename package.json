@@ -9,6 +9,8 @@
     "express-formidable": "^1.2.0",
     "hono": "^4.0.9",
     "moment": "^2.30.1",
+    "oci-objectstorage": "^2.82.1",
+    "oci-sdk": "^2.82.1",
     "typescript": "^5.4.2"
   },
   "devDependencies": {
