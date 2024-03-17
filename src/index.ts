@@ -2,14 +2,16 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import formidable from 'express-formidable';
-// import cors from 'cors'
+import cors from 'cors'
 
 const app = express();
 const port = 3001;
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(formidable());
+app.use(formidable()); 
+
+app.use(cors());
 
 app.get('/', (_, res) => {
   console.log('Olá!')
@@ -17,7 +19,6 @@ app.get('/', (_, res) => {
 })
 
 app.post('/upload', (req: any, res: any) => {
-  console.log('Olá!', req)
   const uploadedFile = req.files['image'];
 
   if (!uploadedFile) {
