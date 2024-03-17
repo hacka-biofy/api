@@ -4,11 +4,16 @@ const path = require('path');
 const formidable = require('express-formidable');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(express.urlencoded({ extended: true }));
 
 app.use(formidable());
+
+app.get('/', (_, res) => {
+  console.log('Olá!')
+  return res.status(200)
+})
 
 app.post('/upload', (req, res) => {
   const uploadedFile = req.files['image'];
