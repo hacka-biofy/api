@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const formidable = require('express-formidable');
+const cors = require('cors')
 
 const app = express();
 const port = 3001;
@@ -16,6 +17,7 @@ app.get('/', (_, res) => {
 })
 
 app.post('/upload', (req, res) => {
+  console.log('Olá!', req)
   const uploadedFile = req.files['image'];
 
   if (!uploadedFile) {
